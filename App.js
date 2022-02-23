@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity, Button } from 'reac
 import React, { useState } from 'react'
 import Header from './components/header';
 import TodoItem from './components/TodoItem';
+import AddTodo from './components/addTodo';
 
 export default function App() {
   
@@ -18,10 +19,17 @@ export default function App() {
     })
   }
 
+  const addTodo = (text) => {
+    setTodos([{text: text, key: Math.random().toString() }, ...todos])
+  }
+
   return (
     <View style={styles.container}>
     <Header />
     <View style={styles.content}>
+      <AddTodo
+        addTodo={addTodo}
+      />
       <View style={styles.list}>
         <FlatList 
           data={todos}
