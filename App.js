@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Button, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import React, { useState } from 'react'
 import Header from './components/header';
 import TodoItem from './components/TodoItem';
@@ -20,30 +20,43 @@ export default function App() {
   }
 
   const addTodo = (text) => {
-    setTodos([{text: text, key: Math.random().toString() }, ...todos])
+    if(text.length > 3) {
+      setTodos([{text: text, key: Math.random().toString() }, ...todos])
+    } else {
+      Alert.alert('OOPS!', 'Todos must be over 3 chars long', [
+        {text: 'Understood', onPress: () => console.log('alert closed')}
+      ])
+    }
   }
 
   return (
-    <View style={styles.container}>
-    <Header />
-    <View style={styles.content}>
-      <AddTodo
-        addTodo={addTodo}
-      />
-      <View style={styles.list}>
-        <FlatList 
-          data={todos}
-          renderItem={({item}) => (
-              <TodoItem
-                item={item}
-                deleteTodoPress={deleteTodoPress}
-              />
-          )}
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss()
+        console.log('dismissed keyboard')
+      }}
+    >
+      <View style={styles.container}>
+      <Header />
+      <View style={styles.content}>
+        <AddTodo
+          addTodo={addTodo}
         />
+        <View style={styles.list}>
+          <FlatList 
+            data={todos}
+            renderItem={({item}) => (
+                <TodoItem
+                  item={item}
+                  deleteTodoPress={deleteTodoPress}
+                />
+            )}
+          />
+        </View>
       </View>
-    </View>
 
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
