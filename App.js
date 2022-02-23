@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Button } from 'react-native';
 import React, { useState } from 'react'
 import Header from './components/header';
+import TodoItem from './components/TodoItem';
 
 export default function App() {
   
@@ -11,6 +12,12 @@ export default function App() {
   ]
   const [todos, setTodos] = useState(initTodos)
 
+  const deleteTodoPress = (key) => {
+    setTodos((prevTodos) => {
+      return prevTodos.filter(todo => todo.key !== key)
+    })
+  }
+
   return (
     <View style={styles.container}>
     <Header />
@@ -19,7 +26,10 @@ export default function App() {
         <FlatList 
           data={todos}
           renderItem={({item}) => (
-              <Text style={styles.item} >{item.text}</Text>
+              <TodoItem
+                item={item}
+                deleteTodoPress={deleteTodoPress}
+              />
           )}
         />
       </View>
