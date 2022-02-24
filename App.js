@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Header from './components/header';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/addTodo';
+import Sandbox from './components/sandbox';
 
 export default function App() {
   
@@ -30,6 +31,7 @@ export default function App() {
   }
 
   return (
+    // <Sandbox />
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss()
@@ -68,9 +70,11 @@ const styles = StyleSheet.create({
     // marginLeft: 30
   },
   content: {
+    flex: 1,
     padding: 40
   },
   list: {
+    flex: 1,
     marginTop: 20
   }
 });
